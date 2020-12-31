@@ -87,4 +87,21 @@ class FlutterRingtonePlayer {
       _channel.invokeMethod('stop');
     } on PlatformException {}
   }
+
+  static Future<Map> loadRingtone() async {
+    try {
+      return await _channel.invokeMethod('loadRingtone');
+    } on PlatformException {
+      return {};
+    }
+  }
+
+  static Future<void> playSystemRingtone(String ringtonePath) async {
+    try {
+      return await _channel.invokeMethod('playSystemRingtone', {"ringtonePath": ringtonePath});
+    } on PlatformException {
+      return {};
+    }
+  }
+
 }

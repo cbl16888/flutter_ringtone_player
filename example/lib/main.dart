@@ -3,7 +3,15 @@ import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Map _ringtone;
+
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -70,6 +78,28 @@ class MyApp extends StatelessWidget {
                   child: const Text('stop'),
                   onPressed: () {
                     FlutterRingtonePlayer.stop();
+                  },
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(8),
+                child: RaisedButton(
+                  child: const Text('loadRingtone'),
+                  onPressed: () async {
+                    _ringtone = await FlutterRingtonePlayer.loadRingtone();
+                    print("加载铃声: $_ringtone");
+                  },
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(8),
+                child: RaisedButton(
+                  child: const Text('playSystemRingtone'),
+                  onPressed: () async {
+                    if (null != _ringtone) {
+                      var ring = _ringtone.entries.first;
+                      FlutterRingtonePlayer.playSystemRingtone(ring.value);
+                    }
                   },
                 ),
               ),
